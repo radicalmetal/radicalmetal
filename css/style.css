@@ -862,7 +862,7 @@ textarea.w-select {
   display: none !important;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 794px) {
   .w-container {
     max-width: 728px;
   }
@@ -2042,7 +2042,7 @@ textarea.w-select {
   position: static;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 794px) {
   .w-nav[data-collapse="medium"] .w-nav-menu {
     display: none;
   }
@@ -2268,7 +2268,7 @@ textarea.w-select {
   display: flex;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 794px) {
   .w-layout-blockcontainer {
     max-width: 728px;
   }
@@ -3520,7 +3520,7 @@ textarea.w-select {
   color: #fff;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 794px) {
   .brandimage {
     width: 100%;
     max-width: 95%;
@@ -4439,7 +4439,7 @@ textarea.w-select {
   grid-template-columns: 1fr 1fr;
 }
 
-@media screen and (max-width: 991px) {
+@media screen and (max-width: 900px) {
   #w-node-d3ae693c-6e51-d27c-4c9b-5d76ca058a4c-5206d52a {
     grid-template-rows: auto;
     grid-template-columns: 1fr 1fr 1fr;
