@@ -4225,12 +4225,12 @@ textarea.w-select {
 
   .emailThreads {
     width: 92%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .threadsHeadline {
     background-color: rgba(12, 12, 12, 0.551);
-    background-position: 50% 0;
-    background-size: cover;
     flex-flow: column;
     justify-content: center;
     align-items: center;
@@ -4241,6 +4241,9 @@ textarea.w-select {
     color: rgb(255, 255, 255);
     font-size: 18px;
     padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1rem;
   }
 
   .rustySign {
@@ -4361,6 +4364,7 @@ textarea.w-select {
     grid-auto-flow: row;
     place-items: start stretch;
     margin-bottom: 23px;
+    width: 94%;
   }
 
   .videos {
@@ -4544,7 +4548,7 @@ textarea.w-select {
   .background-video-3 {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    height: 64rem;
+    height: 80rem;
   }
 
   .clickanimation {
