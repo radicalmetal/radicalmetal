@@ -469,7 +469,7 @@
         </div>
 
        
-<div id="rad-featured-scroller-container"> 
+        <div id="rad-featured-scroller-container"> 
     <style>
         /* All styles are locked to this ID so they won't "leak" out */
         #rad-featured-scroller-container {
@@ -479,15 +479,14 @@
             --scale-factor: 1.25;           
             position: relative;
             width: 90%;
-            height: 650px; /* Specific height for the component */
+            height: 650px; 
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color:transparent; /* Blends into your page */
+            background-color:transparent; 
             overflow: hidden; 
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             margin-top: -2rem;
-            
         }
 
         #rad-featured-scroller-container .carousel-container {
@@ -508,7 +507,7 @@
             scrollbar-width: none;
             scroll-behavior: smooth;
             width: 100%;
-            height:32rem;
+            height: 32rem;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -612,7 +611,6 @@
             transition: background 0.3s, transform 0.3s;
         }
 
-
         #rad-featured-scroller-container .nav-btn:hover {
             background: rgba(37, 37, 37, 0.5);
             transform: translateY(-50%) scale(1.1);
@@ -624,8 +622,8 @@
         /* MOBILE ADJUSTMENTS */
         @media (max-width: 768px) {
               #rad-featured-scroller-container {
-                  --card-width: 270px; /* Even wider on mobile to fill the screen */
-                  --gap: 30px; /* Tighter gap so you see the edges of other cards */
+                  --card-width: 270px; 
+                  --gap: 30px; 
                   --scale-factor: 1.1;
                   height: 550px;
               }
@@ -663,53 +661,54 @@
                 <div class="card-label">Druid Creativity Symbol</div>
             </div>
             <div class="photo-card">
-              <img src="images/BLUH_Franknstn.jpeg" alt="Show E">
+              <img src="images/BLUH_Franknstn.jpeg" alt="Show F">
               <div class="card-label">Frankenstein</div>
           </div>
             <div class="photo-card">
-              <img src="images/OH_Frnknstn.jpeg" alt="Show E">
+              <img src="images/OH_Frnknstn.jpeg" alt="Show G">
               <div class="card-label">Frankenstein</div>
           </div>
             <div class="photo-card">
-              <img src="images/WH_Eyesclosed.jpeg" alt="Show E">
+              <img src="images/WH_Eyesclosed.jpeg" alt="Show H">
               <div class="card-label">Ace Frehley</div>
           </div>
             <div class="photo-card">
-              <img src="images/WB_Blk.jpeg" alt="Show E">
+              <img src="images/WB_Blk.jpeg" alt="Show I">
               <div class="card-label">B.Hinds Beanie</div>
           </div>
             <div class="photo-card">
-              <img src="images/WH_PnkLightning.jpeg" alt="Show E">
+              <img src="images/WH_PnkLightning.jpeg" alt="Show J">
               <div class="card-label">Bowie No Eyes</div>
           </div>
             <div class="photo-card">
-              <img src="images/lurchHatBig.jpg" alt="Show E">
+              <img src="images/lurchHatBig.jpg" alt="Show K">
               <div class="card-label">Lurch</div>
           </div>
             <div class="photo-card">
-              <img src="images/multipleBeanies.jpg" alt="Show E">
+              <img src="images/multipleBeanies.jpg" alt="Show L">
               <div class="card-label">B.Hinds Beanie</div>
           </div>
             <div class="photo-card">
-              <img src="images/pinnacleHeartHat.jpg" alt="Show E">
+              <img src="images/pinnacleHeartHat.jpg" alt="Show M">
               <div class="card-label">Pinnacle Heart</div>
           </div>
-              
-                
-            
-            
         </div>
     </div>
 
     <script>
         (function() {
             const scroller = document.getElementById('scroller-element');
+            const container = document.getElementById('rad-featured-scroller-container');
             const prevBtn = document.getElementById('btn-prev');
             const nextBtn = document.getElementById('btn-next');
             
-            const cardWidth = 320; 
-            const gap = 60;
-            const step = cardWidth + gap;
+            // This function ensures the script always uses the REAL CSS values
+            function getStep() {
+                const style = getComputedStyle(container);
+                const width = parseInt(style.getPropertyValue('--card-width'));
+                const gap = parseInt(style.getPropertyValue('--gap'));
+                return width + gap;
+            }
 
             // 1. TRIPLE CLONING
             const originalContent = scroller.innerHTML;
@@ -746,16 +745,18 @@
 
             // 3. INFINITE LOOP JUMP
             function handleInfinite() {
+                const step = getStep();
                 const scrollLeft = scroller.scrollLeft;
                 const middleSetStart = totalOriginals * step;
                 const middleSetEnd = (totalOriginals * 2) * step;
 
+                // Thresholds use (step / 2) for a seamless handoff
                 if (scrollLeft < middleSetStart - (step / 2)) {
                     scroller.style.scrollBehavior = 'auto';
-                    scroller.scrollLeft += totalOriginals * step;
-                } else if (scrollLeft > middleSetEnd + (step / 2)) {
+                    scroller.scrollLeft += (totalOriginals * step);
+                } else if (scrollLeft >= middleSetEnd - (step / 2)) {
                     scroller.style.scrollBehavior = 'auto';
-                    scroller.scrollLeft -= totalOriginals * step;
+                    scroller.scrollLeft -= (totalOriginals * step);
                 }
                 
                 scroller.style.scrollBehavior = 'smooth';
@@ -765,17 +766,17 @@
             // 4. NAVIGATION
             nextBtn.addEventListener('click', () => {
                 scroller.style.scrollBehavior = 'smooth';
-                scroller.scrollBy({ left: step });
+                scroller.scrollBy({ left: getStep() });
             });
 
             prevBtn.addEventListener('click', () => {
                 scroller.style.scrollBehavior = 'smooth';
-                scroller.scrollBy({ left: -step });
+                scroller.scrollBy({ left: -getStep() });
             });
 
             // 5. INITIALIZE
             const startScroll = () => {
-                scroller.scrollLeft = totalOriginals * step;
+                scroller.scrollLeft = totalOriginals * getStep();
                 setTimeout(updateFeatured, 50);
             };
 
@@ -786,7 +787,12 @@
             }
 
             scroller.addEventListener('scroll', handleInfinite);
-            window.addEventListener('resize', updateFeatured);
+            
+            window.addEventListener('resize', () => {
+                // On resize, we reset to center so the math doesn't break
+                scroller.scrollLeft = totalOriginals * getStep();
+                updateFeatured();
+            });
 
             // Click to center
             allCards.forEach(card => {
