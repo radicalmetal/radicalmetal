@@ -235,7 +235,6 @@ input::-moz-focus-inner {
   flex-flow: row;
   background-color: rgb(0, 0, 0);
   width: 100%;
-  margin-bottom: 10px;
 }
 
 .bigItems {
@@ -4476,7 +4475,7 @@ textarea.w-select {
   }
 
   .jesseimg {
-    margin-left: 40px;
+    margin-left: 0px;
   }
 
   .heading-3 {
@@ -4510,6 +4509,7 @@ textarea.w-select {
   .divjessepic {
     flex-flow: column;
     width: 100%;
+    margin-right: auto;
   }
 
   .substacklinks {
@@ -4548,7 +4548,7 @@ textarea.w-select {
   .background-video-3 {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    height: 80rem;
+    height: 74rem;
   }
 
   .clickanimation {
