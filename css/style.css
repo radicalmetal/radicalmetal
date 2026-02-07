@@ -2655,6 +2655,20 @@ textarea.w-select {
   align-items: flex-start;
   width: 100%;
   display: block;
+  opacity: 0;
+  transform: translateY(8rem);
+  animation: fadeUp 1s ease-out forwards;
+}
+
+.videos.is-visible {
+  animation: fadeUp 0.9s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .youtube-2 {
