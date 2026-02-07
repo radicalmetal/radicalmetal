@@ -508,7 +508,10 @@
             scroll-behavior: smooth;
             width: 100%;
             height: 32rem;
-            -webkit-overflow-scrolling: touch; /* Essential for smooth mobile feel */
+            -webkit-overflow-scrolling: touch;
+            /* Tell the browser to prepare for scrolling hardware acceleration */
+            backface-visibility: hidden;
+            perspective: 1000px;
         }
 
         #rad-featured-scroller-container .scroller::-webkit-scrollbar {
@@ -528,6 +531,7 @@
             transform: scale(0.85);
             opacity: 1;
             filter: blur(0px);
+            /* Important: tells browser to pre-render these */
             will-change: transform, opacity;
             overflow: visible; 
             cursor: pointer;
@@ -711,6 +715,7 @@
                 return width + gap;
             }
 
+            // Triple Cloning
             const originalContent = scroller.innerHTML;
             scroller.innerHTML = originalContent + originalContent + originalContent;
             
@@ -725,8 +730,8 @@
                     const cardRect = card.getBoundingClientRect();
                     const cardCenter = cardRect.left + (cardRect.width / 2);
                     const distance = Math.abs(centerPoint - cardCenter);
+                    
                     card.classList.remove('is-featured');
-                    // Slightly more generous hit area for featured state
                     if (distance < (getStep() / 2)) {
                         card.classList.add('is-featured');
                     }
@@ -740,18 +745,24 @@
                 const scrollLeft = scroller.scrollLeft;
                 const setWidth = totalOriginals * step;
 
-                // Thresholds are now wider to prevent jumping while the user is actively swiping
-                // We only jump when they get deep into the first or third set.
-                if (scrollLeft < (setWidth * 0.5)) {
+                // Thresholds are deep enough to avoid jitter but handle the loop
+                if (scrollLeft < (setWidth * 0.4)) {
                     isJumping = true;
                     scroller.style.scrollBehavior = 'auto';
                     scroller.scrollLeft += setWidth;
-                    setTimeout(() => { isJumping = false; }, 50);
-                } else if (scrollLeft > (setWidth * 2.5)) {
+                    // Reset behavior immediately after jump
+                    requestAnimationFrame(() => {
+                        scroller.style.scrollBehavior = 'smooth';
+                        isJumping = false;
+                    });
+                } else if (scrollLeft > (setWidth * 2.6)) {
                     isJumping = true;
                     scroller.style.scrollBehavior = 'auto';
                     scroller.scrollLeft -= setWidth;
-                    setTimeout(() => { isJumping = false; }, 50);
+                    requestAnimationFrame(() => {
+                        scroller.style.scrollBehavior = 'smooth';
+                        isJumping = false;
+                    });
                 }
                 
                 updateFeatured();
@@ -767,13 +778,18 @@
                 scroller.scrollBy({ left: -getStep() });
             });
 
+            // Initialize with a slightly longer delay to ensure browser "paint"
             const startScroll = () => {
-                scroller.scrollLeft = totalOriginals * getStep();
-                updateFeatured();
+                const step = getStep();
+                scroller.style.scrollBehavior = 'auto';
+                scroller.scrollLeft = totalOriginals * step;
+                setTimeout(() => {
+                    scroller.style.scrollBehavior = 'smooth';
+                    updateFeatured();
+                }, 100);
             };
 
             window.addEventListener('load', startScroll);
-
             scroller.addEventListener('scroll', handleInfinite);
             
             window.addEventListener('resize', () => {
