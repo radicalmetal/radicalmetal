@@ -508,7 +508,7 @@
             scroll-behavior: smooth;
             width: 100%;
             height: 32rem;
-            -webkit-overflow-scrolling: touch;
+            -webkit-overflow-scrolling: touch; /* Essential for smooth mobile feel */
         }
 
         #rad-featured-scroller-container .scroller::-webkit-scrollbar {
@@ -702,7 +702,8 @@
             const prevBtn = document.getElementById('btn-prev');
             const nextBtn = document.getElementById('btn-next');
             
-            // This function ensures the script always uses the REAL CSS values
+            let isJumping = false;
+
             function getStep() {
                 const style = getComputedStyle(container);
                 const width = parseInt(style.getPropertyValue('--card-width'));
@@ -710,60 +711,52 @@
                 return width + gap;
             }
 
-            // 1. TRIPLE CLONING
             const originalContent = scroller.innerHTML;
             scroller.innerHTML = originalContent + originalContent + originalContent;
             
             const allCards = scroller.querySelectorAll('.photo-card');
             const totalOriginals = allCards.length / 3;
 
-            // 2. PRECISION CENTER CHECK
             function updateFeatured() {
                 const scrollerRect = scroller.getBoundingClientRect();
                 const centerPoint = scrollerRect.left + (scrollerRect.width / 2);
                 
-                let closestCard = null;
-                let minDistance = Infinity;
-
                 allCards.forEach(card => {
                     const cardRect = card.getBoundingClientRect();
                     const cardCenter = cardRect.left + (cardRect.width / 2);
                     const distance = Math.abs(centerPoint - cardCenter);
-                    
                     card.classList.remove('is-featured');
-
-                    if (distance < minDistance) {
-                        minDistance = distance;
-                        closestCard = card;
+                    // Slightly more generous hit area for featured state
+                    if (distance < (getStep() / 2)) {
+                        card.classList.add('is-featured');
                     }
                 });
-
-                if (closestCard) {
-                    closestCard.classList.add('is-featured');
-                }
             }
 
-            // 3. INFINITE LOOP JUMP
             function handleInfinite() {
+                if (isJumping) return;
+
                 const step = getStep();
                 const scrollLeft = scroller.scrollLeft;
-                const middleSetStart = totalOriginals * step;
-                const middleSetEnd = (totalOriginals * 2) * step;
+                const setWidth = totalOriginals * step;
 
-                // Thresholds use (step / 2) for a seamless handoff
-                if (scrollLeft < middleSetStart - (step / 2)) {
+                // Thresholds are now wider to prevent jumping while the user is actively swiping
+                // We only jump when they get deep into the first or third set.
+                if (scrollLeft < (setWidth * 0.5)) {
+                    isJumping = true;
                     scroller.style.scrollBehavior = 'auto';
-                    scroller.scrollLeft += (totalOriginals * step);
-                } else if (scrollLeft >= middleSetEnd - (step / 2)) {
+                    scroller.scrollLeft += setWidth;
+                    setTimeout(() => { isJumping = false; }, 50);
+                } else if (scrollLeft > (setWidth * 2.5)) {
+                    isJumping = true;
                     scroller.style.scrollBehavior = 'auto';
-                    scroller.scrollLeft -= (totalOriginals * step);
+                    scroller.scrollLeft -= setWidth;
+                    setTimeout(() => { isJumping = false; }, 50);
                 }
                 
-                scroller.style.scrollBehavior = 'smooth';
                 updateFeatured();
             }
 
-            // 4. NAVIGATION
             nextBtn.addEventListener('click', () => {
                 scroller.style.scrollBehavior = 'smooth';
                 scroller.scrollBy({ left: getStep() });
@@ -774,27 +767,21 @@
                 scroller.scrollBy({ left: -getStep() });
             });
 
-            // 5. INITIALIZE
             const startScroll = () => {
                 scroller.scrollLeft = totalOriginals * getStep();
-                setTimeout(updateFeatured, 50);
+                updateFeatured();
             };
 
-            if (document.readyState === 'complete') {
-                startScroll();
-            } else {
-                window.addEventListener('load', startScroll);
-            }
+            window.addEventListener('load', startScroll);
 
             scroller.addEventListener('scroll', handleInfinite);
             
             window.addEventListener('resize', () => {
-                // On resize, we reset to center so the math doesn't break
+                scroller.style.scrollBehavior = 'auto';
                 scroller.scrollLeft = totalOriginals * getStep();
                 updateFeatured();
             });
 
-            // Click to center
             allCards.forEach(card => {
                 card.addEventListener('click', () => {
                     card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
