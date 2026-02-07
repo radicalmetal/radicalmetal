@@ -468,7 +468,8 @@
           <div class="emailThreads">Email Jesse@radicalmetal.com to order</div></div>
         </div>
 
-<div id="rad-featured-scroller-container">
+       
+<div id="rad-featured-scroller-container"> 
     <style>
         /* All styles are locked to this ID so they won't "leak" out */
         #rad-featured-scroller-container {
@@ -611,17 +612,6 @@
             transition: background 0.3s, transform 0.3s;
         }
 
-        /* MOBILE ADJUSTMENTS */
-        @media (max-width: 768px) {
-            #rad-featured-scroller-container {
-                --card-width: 320px; /* Even wider on mobile to fill the screen */
-                --gap: 30px; /* Tighter gap so you see the edges of other cards */
-                height: 550px;
-            }
-            #rad-featured-scroller-container .carousel-container {
-                width: 100% !important;
-            }
-        }
 
         #rad-featured-scroller-container .nav-btn:hover {
             background: rgba(37, 37, 37, 0.5);
@@ -630,6 +620,21 @@
 
         #rad-featured-scroller-container .prev { left: -50px; }
         #rad-featured-scroller-container .next { right: -50px; }
+
+        /* MOBILE ADJUSTMENTS */
+        @media (max-width: 768px) {
+              #rad-featured-scroller-container {
+                  --card-width: 270px; /* Even wider on mobile to fill the screen */
+                  --gap: 30px; /* Tighter gap so you see the edges of other cards */
+                  --scale-factor: 1.1;
+                  height: 550px;
+              }
+            #rad-featured-scroller-container .carousel-container {
+                width: 100% !important;
+            }
+            #rad-featured-scroller-container .prev { left: 2px; }
+            #rad-featured-scroller-container .next { right: 2px; }
+        }
     </style>
 
     <div class="carousel-container">
