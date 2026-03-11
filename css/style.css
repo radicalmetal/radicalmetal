@@ -2682,6 +2682,7 @@ textarea.w-select {
   margin-top: 0;
   padding: 20px;
   width: 100%;
+  margin-bottom: 2rem;
 }
 
 .navmerch {
@@ -2717,10 +2718,14 @@ textarea.w-select {
   display: flex;
 }
 
-.section.nav {
+.section.sectionNav {
   justify-content: center;
   align-items: flex-start;
   height: 3rem;
+}
+.section.section {
+  margin-top: 6rem;
+  margin-bottom: 6rem;
 }
 
 .div-block-4 {
@@ -3216,7 +3221,7 @@ textarea.w-select {
   justify-content: center;
   align-items: center;
   height: 32rem;
-  margin-bottom: 0;
+  margin-bottom: 2rem;
   display: flex;
 }
 
