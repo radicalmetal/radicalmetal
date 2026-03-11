@@ -2682,7 +2682,7 @@ textarea.w-select {
   margin-top: 0;
   padding: 20px;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .navmerch {
@@ -4392,7 +4392,6 @@ textarea.w-select {
     align-items: stretch;
     width: 100%;
     margin-top: 0px;
-
     display: block;
   }
 
@@ -4567,7 +4566,7 @@ textarea.w-select {
   .background-video-3 {
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    height: 74rem;
+    height: 88rem;
   }
 
   .clickanimation {
