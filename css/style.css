@@ -211,7 +211,7 @@ input::-moz-focus-inner {
   align-items: center;
   width: 50%;
   margin-bottom: 16px;
-  margin-top: 16px;
+  margin-top: 50px;
   margin-left: 10px;
   margin-right: 10px;
   box-shadow: 12px 11px 12px -5px #000000b8;
@@ -309,6 +309,34 @@ input::-moz-focus-inner {
   box-shadow: 12px 11px 12px -5px #000000b8;
   line-height: 28px;
   border-radius: 12px;
+}
+
+.tiktokThreads {
+  font-size: 26px;
+  background-color: rgba(12, 12, 12, 0.551);
+  padding: 10px;
+  border: 4px solid rgb(0, 0, 0);
+  width: 46%;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  color: white;
+  box-shadow: 12px 11px 12px -5px #000000b8;
+  line-height: 28px;
+  border-radius: 12px;
+  
+
+}
+
+.tiktokLink {
+  color:white;
+  text-decoration: none;
+}
+
+.tiktokLink:hover {
+  color:black;
 }
 
 input {
@@ -4246,7 +4274,14 @@ textarea.w-select {
     margin-left: auto;
     margin-right: auto;
   }
-
+  
+  .twoDivsThreads {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
   .threadsHeadline {
     background-color: rgba(12, 12, 12, 0.551);
     flex-flow: column;
