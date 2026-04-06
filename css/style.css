@@ -326,17 +326,15 @@ input::-moz-focus-inner {
   box-shadow: 12px 11px 12px -5px #000000b8;
   line-height: 28px;
   border-radius: 12px;
-  
-
 }
 
 .tiktokLink {
-  color:white;
+  color: white;
   text-decoration: none;
 }
 
 .tiktokLink:hover {
-  color:black;
+  color: black;
 }
 
 input {
@@ -4274,14 +4272,14 @@ textarea.w-select {
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   .twoDivsThreads {
     display: flex;
     flex-flow: column;
     align-items: center;
     justify-content: center;
   }
-  
+
   .threadsHeadline {
     background-color: rgba(12, 12, 12, 0.551);
     flex-flow: column;
